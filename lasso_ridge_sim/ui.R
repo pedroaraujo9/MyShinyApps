@@ -14,7 +14,7 @@ library(tidyverse)
 shinyUI(fluidPage(
 
     # Application title
-    titlePanel("Old Faithful Geyser Data"),
+    titlePanel("Lasso and Ridge Simulation"),
 
     # Sidebar with a slider input for number of bins
     sidebarLayout(
@@ -53,7 +53,8 @@ shinyUI(fluidPage(
                 min = 0,
                 max = 100,
                 value = 3
-            )
+            ),
+            submitButton("Simulate")
         ),
         # Show a plot of the generated distribution
         mainPanel(

@@ -58,9 +58,6 @@ shinyServer(function(input, output) {
         y_teste = df[-index_treino, 1] %>% as.numeric()
         
         
-        lasso = glmnet(x = x_treino, y = y_treino, alpha = 1, 
-                       family = "gaussian", lambda = lambda_grid_lasso)
-        
         #modelos regularizados 
         lambda_grid_lasso = seq(0, input$lambda_max, 0.1)
         
@@ -87,8 +84,7 @@ shinyServer(function(input, output) {
         erro_lasso_df
         
     })
-    
-    
+
     
     output$lasso_lambda = renderPlot({
         erro_lasso() %>%
@@ -97,7 +93,7 @@ shinyServer(function(input, output) {
             mutate(tipo = str_replace_all(tipo, "_", " ")) %>%
             ggplot(aes(x=lambda,y=erro,col=tipo)) +
             geom_line() + 
-            labs(x=expression(lambda), y="Erro", col='Tipo:') + 
+            labs(x=expression(lambda), y="Mean Squared Error", col='Tipo:') + 
             theme(legend.position = "top")
     })
     
@@ -109,7 +105,8 @@ shinyServer(function(input, output) {
             ggplot(aes(x=nvar,y=erro,col=tipo)) +
             geom_line() + 
             geom_vline(xintercept = input$p1, col = 'red', alpha = 0.4, linetype = 2) + 
-            labs(x = "Número de variáveis selecionadas", y = "Erro", col="Tipo") + 
+            labs(x = "Número de variáveis selecionadas", 
+                 y = "Mean Squared Error", col="Tipo") + 
             theme(legend.position = "top")
     })
     
